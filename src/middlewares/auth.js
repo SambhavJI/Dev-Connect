@@ -1,15 +1,29 @@
-const adminAuth = (req, res, next) => {
-    const adminAuthToken = req.headers["authorization"];
-    const expectedToken = "xyz";
+const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 
-    if (adminAuthToken === expectedToken) {
-        console.log("Admin Verified");
+const userAuth = async (req, res, next) => {
+    try {
+        const { token } = req.cookies;
+
+        if (!token) {
+            throw new Error("No token provided");
+        }
+
+        const decodeObj = jwt.verify(token, "Sambhav@12123"); // Secret should be in env
+        const { _id } = decodeObj;
+
+        const user = await User.findById(_id);
+        if (!user) {
+            throw new Error("User not found. Please login again.");
+        }
+
+        req.user = user;
         next();
-    } else {
-        res.status(403).send("Not an admin");
+    } catch (err) {
+        res.status(401).send("ERROR: " + err.message);
     }
 };
 
 module.exports = {
-    adminAuth,
+    userAuth
 };
