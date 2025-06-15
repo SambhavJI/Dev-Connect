@@ -36,7 +36,15 @@ const userSchema = mongoose.Schema({
     },
     photoUrl:{
         type:String,
-        default:"User image"
+        default:"User image",
+        maxLength:255
+    },
+    about:{
+        type:String,
+        maxLength:500
+    },
+    skills:{
+        type:[String]
     }
 },{
     timestamps  :true
