@@ -1,10 +1,11 @@
 const express = require("express")
 const bcrypt = require("bcrypt")
 const User = require("../models/user")
-const validateSignUpData = require("../utils/validation")
+const {validateSignUpData} = require("../utils/validation")
 const authRouter = express.Router()
 const validator = require("validator")
 const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 authRouter.post("/signup", async (req, res) => {
   try {
@@ -49,7 +50,7 @@ authRouter.post("/login", async (req, res) => {
     const isPassword = await bcrypt.compare(password, user.password);
 
     if (isPassword) {
-      const cookie = jwt.sign({ _id: user._id }, "Sambhav@12123",{
+      const cookie = jwt.sign({ _id: user._id }, process.env.SECRET_PASSCODE,{
         expiresIn:"1d",
       })
       res.cookie("token", cookie)

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+require("dotenv").config()
 
 const userAuth = async (req, res, next) => {
     try {
@@ -9,7 +10,7 @@ const userAuth = async (req, res, next) => {
             throw new Error("No token provided");
         }
 
-        const decodeObj = jwt.verify(token, "Sambhav@12123"); // Secret should be in env
+        const decodeObj = jwt.verify(token, process.env.SECRET_PASSCODE); // Secret should be in env
         const { _id } = decodeObj;
 
         const user = await User.findById(_id);
