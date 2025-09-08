@@ -9,7 +9,7 @@ requestRouter.post("/request/send/:status/:toUserID", userAuth, async (req, res)
     const fromUserId = req.user._id;
     const status = req.params.status;
     const toUserId = req.params.toUserID;
-    
+
     const allowedStatus = ["interested", "ignored"];
     if (!allowedStatus.includes(status)) {
       throw new Error("Not A Valid Status Field");
@@ -45,4 +45,31 @@ requestRouter.post("/request/send/:status/:toUserID", userAuth, async (req, res)
   }
 });
 
+requestRouter.post("/request/respond/:status/:requestID", userAuth, async (req, res) => {
+  try {
+    const loggedInUser = req.user;
+    const { status, requestID } = req.params;
+
+    const allowedStatus = ["accepted","ignored"];
+    if(!allowedStatus.includes(status)){
+      return res.status(400).send("Not a Valid Request Type")
+    }
+
+    const connectionRequest = await ConnectionRequestModel.findOne({
+      _id : requestID,
+      toUserId : loggedInUser._id,
+      status : "interested"
+    })
+    if(!connectionRequest){
+      return res.status(404).send("Request Not Found")
+    }
+    connectionRequest.status = status;
+
+    const data = await connectionRequest.save();
+
+    res.send({ message: `Connection Request is ${status}`, data })
+  }catch(err){
+    res.status(400).send("Something Went Wrong")
+  }
+})
 module.exports = requestRouter;
