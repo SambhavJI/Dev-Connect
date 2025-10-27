@@ -46,6 +46,7 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
     try {
         const loggedInUser = req.user;
         const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
         const connectionRequest = await ConnectionRequestModel.find({
             $or: [{
                 fromUserId: loggedInUser._id
@@ -71,7 +72,7 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
             "photoUrl",
             "age",
             "gender"
-        ]);
+        ]).skip((page - 1) * limit).limit(limit);
 
         res.json(users);
 
