@@ -26,7 +26,8 @@ const userSchema = mongoose.Schema({
         }
     },
     password: {
-        type: String
+        type: String,
+        required: true,
     },
     gender: {
         type: String
@@ -48,6 +49,7 @@ const userSchema = mongoose.Schema({
     }
 },{
     timestamps  :true
-})
+},
+)
 
 module.exports = mongoose.model("User", userSchema)
