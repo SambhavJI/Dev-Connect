@@ -10,7 +10,7 @@ const userAuth = async (req, res, next) => {
             throw new Error("No token provided");
         }
 
-        const decodeObj = jwt.verify(token, process.env.SECRET_PASSCODE); // Secret should be in env
+        const decodeObj = jwt.verify(token, process.env.SECRET_PASSCODE);
         const { _id } = decodeObj;
 
         const user = await User.findById(_id);
