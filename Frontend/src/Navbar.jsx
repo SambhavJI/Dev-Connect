@@ -1,8 +1,8 @@
 export default function Navbar() {
     return (
-        <div className="navbar bg-base-100 shadow-sm">
+        <div className="navbar bg-neutral shadow-sm">
             <div className="flex-1">
-                <a className="btn btn-ghost text-xl">Dev-Connect</a>
+                <a className="btn btn-ghost text-xl">devConnect</a>
             </div>
             <div className="flex gap-2">
                 <div className="dropdown dropdown-end mx-5">
