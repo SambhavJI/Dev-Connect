@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const user = useSelector((state) => state.user);
@@ -6,7 +7,7 @@ export default function Navbar() {
   return (
     <div className="navbar bg-neutral shadow-sm">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">devConnect</a>
+        <Link to="/feed" className="btn btn-ghost text-xl">devConnect</Link>
       </div>
 
       {user && (
@@ -28,9 +29,9 @@ export default function Navbar() {
                 tabIndex={0}
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
               >
-                <li><a>Profile</a></li>
-                <li><a>Settings</a></li>
-                <li><a>Logout</a></li>
+                <li><Link to="/profile">Profile</Link></li>
+                <li><Link to="/settings">Settings</Link></li>
+                <li><Link to="/logout">Logout</Link></li>
               </ul>
             </>
           </div>
