@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 export default function Login() {
   const [emailId, setEmailId] = useState('');
   const [password, setPassword] = useState('');
+  const [errMsg, setErrMsg] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogin = async () => {
@@ -16,8 +17,7 @@ export default function Login() {
       alert(JSON.stringify(res.data.firstName) + ' logged in successfully');
       navigate('/feed');
     } catch (err) {
-      console.log(err);
-      alert('Login failed. Please try again.');
+      setErrMsg(err.response?.data?.error || 'An error occurred during login.');
     }
   }
   return (
@@ -71,6 +71,7 @@ export default function Login() {
             Must be more than 8 characters, including
             <br />At least one number <br />At least one lowercase letter <br />At least one uppercase letter
           </p>
+          <p className="text-red-500">{errMsg}</p>
           <div className="card-actions justify-center">
             <button className="btn btn-primary justify-center" onClick={handleLogin}>Login</button>
           </div>
