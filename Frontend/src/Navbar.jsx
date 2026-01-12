@@ -2,6 +2,7 @@ import { useSelector ,useDispatch} from "react-redux";
 import { Link , useNavigate } from "react-router-dom";
 import axios from "axios";
 import { removeUser } from "./utils/userSlice";
+import { removeFeed } from "./utils/feedSlice";
 
 export default function Navbar() {
   const user = useSelector((state) => state.user);
@@ -12,6 +13,7 @@ export default function Navbar() {
       await axios.post("http://localhost:3000/logout", {}, { withCredentials: true });
       alert("Logged out successfully");
       dispatch(removeUser());
+      dispatch(removeFeed());
       navigate("/login");
     }catch(err){
       console.error("Logout failed:", err);

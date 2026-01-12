@@ -71,7 +71,9 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
             "lastName",
             "photoUrl",
             "age",
-            "gender"
+            "gender",
+            "about",
+            "skills"
         ]).skip((page - 1) * limit).limit(limit);
 
         res.json(users);

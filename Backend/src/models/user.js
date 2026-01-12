@@ -30,10 +30,12 @@ const userSchema = mongoose.Schema({
         required: true,
     },
     gender: {
-        type: String
+        type: String,
+        default:"Male"
     },
     age: {
-        type: Number
+        type: Number,
+        default:18
     },
     photoUrl:{
         type:String,
@@ -42,7 +44,8 @@ const userSchema = mongoose.Schema({
     },
     about:{
         type:String,
-        maxLength:500
+        maxLength:500,
+        default:"This is default about"
     },
     skills:{
         type:[String]

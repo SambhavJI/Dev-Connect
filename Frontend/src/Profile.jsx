@@ -1,7 +1,10 @@
+import UserCard from "./UserCard"
+import { useSelector } from "react-redux"
+
 export default function Profile() {
+    const user = useSelector((state) => state.user);
     return (
-        <div className="body"> 
-            <h1 className="text-3xl font-bold underline">Profile Page</h1>
-        </div>
+        user &&
+        <UserCard user={user} />
     )
 }
